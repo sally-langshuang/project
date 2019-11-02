@@ -67,11 +67,4 @@ if __name__ == '__main__':
     t.add(4)
     t.add(6)
     t.add(8)
-    '''
-    t.root = BinaryNode(5)
-    t.root.add_left(3)
-    t.root.left.add_right(4)
-    t.root.left.add_left(2)
-    t.root.left.left.add_left(1)
-    t.root.add_right(6)'''
     print(t)
