@@ -1,7 +1,10 @@
 class ListStack():
     def __init__(self):
         self.list = list()
-    
+   
+    def isempty(self):
+        return not bool(self.list)
+
     def gettop(self):
         try:
             rst = self.list[-1]
