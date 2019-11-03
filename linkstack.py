@@ -37,11 +37,12 @@ class LinkStack:
         rst = self._head.elem
         self._head = self._head.next
         return rst
-    
+
     def getnext(self):
         if not self._head:
             raise IndexError("get element from empty stack")
         return self._head.elem
+
     def __repr__(self):
         '''Return a valid Python expression that could be used to recreate object'''
         node = self._head
@@ -69,3 +70,7 @@ class LinkStack:
     def __iter__(self):
         return MyIterator(self)
 
+if __name__ == '__main__':
+    l = LinkStack([2,3,4])
+    for item in l:
+        print(item)

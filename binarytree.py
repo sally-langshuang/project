@@ -1,62 +1,90 @@
 from binarynode import BinaryNode
+from linkqueue import LinkQueue
+from printtree import PrintTree
 
 # tree's degree = 2
 class BinaryTree:
     def __init__(self, root=None):
         self.root = root
     
-    def level_traversal(self):
-        pass
 
-    #DLR Degree Left Right
-    def preorder_traversal(self, node, handle=print):
-        if self.root:
-            handle(node.item)
-            if node.left:
-                self.preorder_traversal(node.left, handle)
-            if node.right:
-                self.preorder_traversal(node.right, handle)
+    #DLR Data Left Right
+    @staticmethod
+    def preorder_traversal(tree, handle, end=id):
+        if tree.root:
+            handle(tree)
+            if tree.root.left:
+                BinaryTree.preorder_traversal(BinaryTree(tree.root.left), handle, end)
+            if tree.root.right:
+                BinaryTree.preorder_traversal(BinaryTree(tree.root.right), handle, end)
+            end(tree)
 
     # LDR
-    def inorder_traversal(self, node, handle=print):
-        if node:
-            if node.left:
-                self.inorder_traversal(node.left, handle)
-            handle(node.item)
-            if node.right:
-                self.inorder_traversal(node.right, handle)
+    @staticmethod
+    def inorder_traversal(tree, handle, end=id):
+        if tree.root:
+            if tree.root.left:
+                BinaryTree.inorder_traversal(BinaryTree(tree.root.left), handle, end)
+            handle(tree)
+            if tree.root.right:
+                BinaryTree.inorder_traversal(BinaryTree(tree.root.right), handle, end)
+            end(tree)
 
     # LRD
-    def postorder_traversal(self, node, handle=print):
-        if node:
-            if node.left:
-                self.postorder_traversal(node.left, handle)
-            if node.right:
-                self.postorder_traversal(node.right, handle)
-            handle(node.item)
+    @staticmethod
+    def postorder_traversal(tree, handle, end=id):
+        if tree.root:
+            if tree.root.left:
+                BinaryTree.postorder_traversal(BinaryTree(tree.root.left), handle, end)
+            if tree.root.right:
+                BinaryTree.postorder_traversal(BinaryTree(tree.root.right), handle, end)
+            handle(tree)
+            end(tree)
     
-    def __str__(self):
+    def print_line(self):
         rst = []
-        def handle(item):
-            rst.append(item)
+        def handle(tree):
+            rst.append(tree.root.data)
         # LDR 中序遍历显示
-        self.inorder_traversal(self.root,handle)
+        self.inorder_traversal(self, handle)
         rst = "binary tree => " + str(rst)
-        return str(rst)
+        return rst
+
+    def print_tree(self):
+        rst = PrintTree(list_=self.level_traversal()).rst
+        return rst[:-1]
+
+    def level_traversal(self):
+        level = -1
+        list_ = []
+        def handle(tree):
+            nonlocal level
+            level += 1
+            # list_ = [(data,level),...]
+            list_.append((tree.root.data, level))
+        def end(tree):
+            nonlocal level
+            level -= 1
+        self.preorder_traversal(self, handle, end)
+        return list_
+
+    def __str__(self):
+        #return self.print_line()
+        return self.print_tree()
     
-    def add(self, item):
+    def add(self, data):
         if not self.root:
-            self.root = BinaryNode(item)
-        elif item < self.root.item:
+            self.root = BinaryNode(data)
+        elif data < self.root.data:
             if not self.root.left:
-                self.root.left = BinaryNode(item)
+                self.root.left = BinaryNode(data)
                 return
-            BinaryTree(self.root.left).add(item)
+            BinaryTree(self.root.left).add(data)
         else:
             if not self.root.right:
-                self.root.right = BinaryNode(item)
+                self.root.right = BinaryNode(data)
                 return
-            BinaryTree(self.root.right).add(item)
+            BinaryTree(self.root.right).add(data)
         
 if __name__ == '__main__':
     t = BinaryTree()
@@ -64,7 +92,12 @@ if __name__ == '__main__':
     t.add(3)
     t.add(7)
     t.add(2)
+    t.add(1)
+    t.add(3.5)
     t.add(4)
     t.add(6)
     t.add(8)
+    t.add(7)
+    t.add(9)
+    t.add(0)
     print(t)

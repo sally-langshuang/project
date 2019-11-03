@@ -1,6 +1,12 @@
 class MyIterator:
     def __init__(self, stack):
         self.stack = stack
+        self.traversal = self.stack._head
 
     def __next__(self):
-        return self.stack.getnext()
+        if not self.traversal:
+            raise StopIteration
+        rst = self.traversal.elem
+        self.traversal = self.traversal.next
+        return rst
+        

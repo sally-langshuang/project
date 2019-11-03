@@ -1,13 +1,13 @@
 class BinaryNode:
-    def __init__(self, item=None, left=None, right=None):
-        self.item = item
+    def __init__(self, data=None, left=None, right=None):
+        self.data = data
         self.left = left
         self.right = right
 
-    def add_left(self, item):
+    def add_left(self, data):
         if self:
-            self.left = BinaryNode(item)
+            self.left = BinaryNode(data)
 
-    def add_right(self, item):
+    def add_right(self, data):
         if self:
-            self.right = BinaryNode(item)
+            self.right = BinaryNode(data)
