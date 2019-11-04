@@ -77,6 +77,15 @@ class PrintTree:
             data = x[0]
             level = x[1]
             self.list.append(PrintTree.Item(data=data, level=level))
+    
+    def mylen(self, str_):
+        count = 0
+        for char in str_:
+            if ord(char) <= 0x2FA1D and ord(char) >= 0x3007:
+                count += 2
+            else:
+                count += 1
+        return count
 
     def handle_list(self):
         stack = LinkStack()
@@ -89,7 +98,7 @@ class PrintTree:
         def push_stack(stack, item):
             # neighbour lenth 初始化临时变量
             item.neighbour = [0,0] 
-            item.lenth = len(str(item.data))
+            item.lenth = self.mylen(str(item.data))
             item.family = []
             if not stack.is_empty():
                 if stack.getnext().tail is None:
